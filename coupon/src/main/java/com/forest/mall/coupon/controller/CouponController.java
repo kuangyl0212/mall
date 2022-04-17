@@ -1,15 +1,12 @@
 package com.forest.mall.coupon.controller;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 
 // import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.forest.mall.coupon.entity.CouponEntity;
 import com.forest.mall.coupon.service.CouponService;
@@ -31,12 +28,19 @@ public class CouponController {
     @Autowired
     private CouponService couponService;
 
+    @GetMapping("/account/list")
+    public R couponsOfAccount() {
+        CouponEntity coupon = new CouponEntity();
+        coupon.setCouponName("Easter Offer");
+        return R.ok().put("coupons", Collections.singletonList(coupon));
+    }
+
     /**
      * 列表
      */
     @RequestMapping("/list")
     // @RequiresPermissions("coupon:coupon:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R couponsOfAccount(@RequestParam Map<String, Object> params){
         PageUtils page = couponService.queryPage(params);
 
         return R.ok().put("page", page);

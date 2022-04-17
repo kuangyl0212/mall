@@ -4,7 +4,10 @@ import java.util.Arrays;
 import java.util.Map;
 
 // import org.apache.shiro.authz.annotation.RequiresPermissions;
+import com.forest.mall.account.feign.CouponFeignService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +28,32 @@ import com.forest.mall.common.utils.R;
  * @email kuangyl0212@gmail.com
  * @date 2022-04-13 21:22:01
  */
+
+@RefreshScope
 @RestController
 @RequestMapping("account/member")
 public class MemberController {
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private CouponFeignService couponFeignService;
+
+    @Value("${coupon.name}")
+    String couponName;
+
+    @RequestMapping("/testNacosConfig")
+    public R getNacosConfig() {
+        return R.ok().put("coupon", couponName);
+    }
+
+    @RequestMapping("/coupons")
+    public R coupons() {
+        MemberEntity member = new MemberEntity();
+        member.setNickname("niki");
+        R coupons = couponFeignService.couponsOfAccount();
+        return R.ok().put("member", member).put("coupons", coupons.get("coupons"));
+    }
 
     /**
      * 列表

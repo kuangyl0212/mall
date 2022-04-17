@@ -1,8 +1,17 @@
 spring:
   datasource:
     username: root
-    password: root
-    url: jdbc:mysql://192.168.56.10:3306/mall_ums
+    password: password
+    url: jdbc:mysql://localhost:3306/mall_ums
     driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+  application:
+    name: account-service
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
+server:
+  port: 8080
+

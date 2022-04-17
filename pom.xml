@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>product</module>
+        <module>common</module>
         <module>warehouse</module>
         <module>order</module>
         <module>account</module>
