@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      routes:
+        - id: test_route
+          uri: https://baidu.com
+          predicates:
+            - Query=url,baidu
+          filters:
+            - 
+  application:
+    name: gateway-service
+
+server:
+  port: 8085
