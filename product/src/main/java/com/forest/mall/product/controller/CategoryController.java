@@ -39,6 +39,11 @@ public class CategoryController {
         return R.ok().put("page", page);
     }
 
+    @RequestMapping("/list/tree")
+    public R listAsTree() {
+        return R.ok().put("tree", categoryService.listAsTree());
+    }
+
 
     /**
      * 信息

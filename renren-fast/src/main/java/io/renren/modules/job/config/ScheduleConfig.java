@@ -8,6 +8,7 @@
 
 package io.renren.modules.job.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
@@ -23,6 +24,18 @@ import java.util.Properties;
 @Configuration
 public class ScheduleConfig {
 
+    @Value("${spring.datasource.druid.url}")
+    private String url;
+
+    @Value("${spring.datasource.druid.username}")
+    private String username;
+
+    @Value("${spring.datasource.druid.password}")
+    private String password;
+
+    @Value("${spring.datasource.druid.driver-class-name}")
+    private String driver;
+
     @Bean
     public SchedulerFactoryBean schedulerFactoryBean(DataSource dataSource) {
         SchedulerFactoryBean factory = new SchedulerFactoryBean();
@@ -37,6 +50,12 @@ public class ScheduleConfig {
         prop.put("org.quartz.threadPool.threadCount", "20");
         prop.put("org.quartz.threadPool.threadPriority", "5");
         //JobStore配置
+        prop.put("org.quartz.jobStore.dataSource", "myDS");
+        prop.put("org.quartz.dataSource.myDS.provider", "hikaricp");
+        prop.put("org.quartz.dataSource.myDS.URL", url);
+        prop.put("org.quartz.dataSource.myDS.driver", driver);
+        prop.put("org.quartz.dataSource.myDS.user", username);
+        prop.put("org.quartz.dataSource.myDS.password", password);
         prop.put("org.quartz.jobStore.class", "org.quartz.impl.jdbcjobstore.JobStoreTX");
         //集群配置
         prop.put("org.quartz.jobStore.isClustered", "true");
