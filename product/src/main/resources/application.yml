@@ -12,5 +12,10 @@ spring:
     name: product-service
 mybatis-plus:
   mapper-locations: classpath:/mapper/**/*.xml
+  global-config:
+    db-config:
+      logic-delete-field: is_active # 全局逻辑删除的实体字段名(since 3.3.0,配置后可以忽略不配置步骤2)
+      logic-delete-value: 0 # is_active=0
+      logic-not-delete-value: 1 # is_active
 server:
   port: 8083
